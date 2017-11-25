@@ -8,4 +8,8 @@ __version__ = "0.1"
 """
 
 import image_functions as imf
+import settings as config
 
+# load config
+config_path='create_dataset.ini'
+settings = config.CreateDatasetSettings(config_path)
