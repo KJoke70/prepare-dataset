@@ -51,3 +51,8 @@ class CreateDatasetSettings:
         config.set('Flags', 'ignore_truncated', self.ignore_truncated)
         config.write(file)
 
+def crop_image(img, x1, y1, x2, y2):
+    return img[y1:y2, x1:x2]
+
+def get_info_file_path(path):
+    return path[:16] + '.gt_data.txt'
