@@ -7,9 +7,26 @@ __author__ = "Martin Lautenbacher"
 __version__ = "0.1"
 """
 
-import image_functions as imf
-import settings as config
+import utilities
 
 # load config
-config_path='create_dataset.ini'
-settings = config.CreateDatasetSettings(config_path)
+config_path = 'create_dataset.ini'
+settings = utilities.CreateDatasetSettings(config_path)
+
+# paths
+test_path = settings.flickrlogos_path + 'test/'
+train_path = settings.flickrlogos_path + 'train/'
+
+# filelists
+with open(test_path + 'filelist.txt', 'r') as f:
+    test_filelist = f.readlines()
+test_filelist = [x.strip() for x in test_filelist]
+for i in xrange(len(test_filelist)):
+    test_filelist[i] = test_filelist[i][2:]
+
+with open(train_path + 'filelist.txt', 'r') as f:
+    train_filelist = f.readlines()
+train_filelist = [x.strip() for x in train_filelist]
+for i in xrange(len(train_filelist)):
+    train_filelist[i] = train_filelist[i][2:]
+
