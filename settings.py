@@ -33,7 +33,7 @@ class CreateDatasetSettings:
         else:
             # default paths
             self.flickrlogos_path = '../../flickrlogos/'
-            self.result_path = 'result_set'
+            self.result_path = 'result_set/'
             # default flags
             self.ignore_difficult = True
             self.ignore_truncated = False
