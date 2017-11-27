@@ -6,7 +6,7 @@ __version__ = "0.1"
 """
 
 import ConfigParser
-import os.path
+import os
 
 class CreateDatasetSettings:
     """ class to store settings for converting the flickrlogos-47
@@ -67,4 +67,10 @@ def get_info_file_path(path):
     returns /000001/000001493.gt_data.txt
     """
     return path[:16] + '.gt_data.txt'
+
+def makedirs(dir):
+    """ creates dirs for a path if they don't exist """
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
 
