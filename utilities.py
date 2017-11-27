@@ -74,5 +74,9 @@ def makedirs(dir):
         os.makedirs(dir)
 
 def create_result_path(prefix, path, nr):
+    """
+    returns path for new file. prefix is e.g. '64/test/', path is e.g.
+    '000000/000000144.png', nr is number of cropped image
+    """
     return prefix + path[:-4] + '_'  + '{:02d}'.format(nr) + '.png'
 
