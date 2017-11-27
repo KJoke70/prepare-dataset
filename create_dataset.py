@@ -30,3 +30,17 @@ train_filelist = [x.strip() for x in train_filelist]
 for i in xrange(len(train_filelist)):
     train_filelist[i] = train_filelist[i][2:]
 
+# create folder structure for result 256x256 and 64x64 variant
+utilities.makedirs(settings.result_path + '256/test/000000/')
+utilities.makedirs(settings.result_path + '256/test/000001/')
+utilities.makedirs(settings.result_path + '256/test/000002/')
+utilities.makedirs(settings.result_path + '256/train/000000/')
+utilities.makedirs(settings.result_path + '256/train/000001/')
+utilities.makedirs(settings.result_path + '256/train/000002/')
+utilities.makedirs(settings.result_path + '64/test/000000/')
+utilities.makedirs(settings.result_path + '64/test/000001/')
+utilities.makedirs(settings.result_path + '64/test/000002/')
+utilities.makedirs(settings.result_path + '64/train/000000/')
+utilities.makedirs(settings.result_path + '64/train/000001/')
+utilities.makedirs(settings.result_path + '64/train/000002/')
+
