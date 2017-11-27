@@ -73,4 +73,6 @@ def makedirs(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
 
+def create_result_path(prefix, path, nr):
+    return prefix + path[:-4] + '_'  + '{:02d}'.format(nr) + '.png'
 
