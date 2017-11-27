@@ -62,7 +62,8 @@ def crop_image(img, x1, y1, x2, y2):
     return img[y1:y2, x1:x2]
 
 def get_info_file_path(path):
-    """ example:
+    """
+    example:
     path=/000001/000001493.png
     returns /000001/000001493.gt_data.txt
     """
