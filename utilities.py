@@ -15,6 +15,11 @@ class CreateDatasetSettings:
     default_file_path = 'create_dataset.ini'
 
     def __init__(self, path = default_file_path):
+        """
+        Constructor of CreateDatasetSettings
+        Loads settings file or loads the defaults and writes those to disk if
+        no settings file exists
+        """
         if os.path.isfile(path):
             self.file_path = path
             try:
@@ -41,6 +46,7 @@ class CreateDatasetSettings:
 
 
     def write_settings(self, path = default_file_path):
+        """ Writes settings to the file specified in path """
         file = open(path, 'w')
         config = ConfigParser.ConfigParser()
         config.add_section('Paths')
@@ -52,7 +58,13 @@ class CreateDatasetSettings:
         config.write(file)
 
 def crop_image(img, x1, y1, x2, y2):
+    """ returns the cropped image specified by x1, y1, x2, y2 """
     return img[y1:y2, x1:x2]
 
 def get_info_file_path(path):
+    """ example:
+    path=/000001/000001493.png
+    returns /000001/000001493.gt_data.txt
+    """
     return path[:16] + '.gt_data.txt'
+
