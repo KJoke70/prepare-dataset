@@ -1,5 +1,5 @@
 """
-Class to store settings for creating the dataset
+Tools to turn the flickrlogos-47 dataset into a training/test set for DNN
 
 __author__ = "Martin Lautenbacher"
 __version__ = "0.1"
