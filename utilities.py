@@ -7,6 +7,8 @@ __version__ = "0.1"
 
 import ConfigParser
 import os
+import cv2
+import numpy as np
 
 class CreateDatasetSettings:
     """ class to store settings for converting the flickrlogos-47
@@ -95,4 +97,17 @@ class ImageInfo:
         self.truncated = bool(int(s[8]))
 
 
-
+def scale(new_width, image):
+    """ scales image to new_width x new_width """
+    w = len(image[0])
+    h = len(image)
+    if w > h:
+        r = float(new_width) / w
+        dim = (new_width, int(h * r))
+    else:
+        r = float(new_width) / h
+        dim = (int(w * r), new_width)
+    resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+    blank_image = np.zeros((new_width, new_width, 3), np.uint8)
+    #result = ...
+    return resized
