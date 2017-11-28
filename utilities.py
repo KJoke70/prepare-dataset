@@ -28,6 +28,9 @@ class CreateDatasetSettings:
             try:
                 config = ConfigParser.ConfigParser()
                 config.read(path)
+                self.caffe_root = config.get('Paths', 'caffe_root')
+                if not self.caffe_root.endswith('/'):
+                    self.caffe_root = self.caffe_root + '/'
                 self.flickrlogos_path = config.get('Paths', 'flickrlogos_path')
                 if not self.flickrlogos_path.endswith('/'):
                     self.flickrlogos_path = self.flickrlogos_path + '/'
@@ -40,6 +43,7 @@ class CreateDatasetSettings:
                 raise
         else:
             # default paths
+            self.caffe_root = '../../caffe/'
             self.flickrlogos_path = '../../flickrlogos/'
             self.result_path = 'result_set/'
             # default flags
@@ -54,6 +58,7 @@ class CreateDatasetSettings:
         config = ConfigParser.ConfigParser()
         config.add_section('Paths')
         config.add_section('Flags')
+        config.set('Paths', 'caffe_root', self.caffe_root)
         config.set('Paths', 'flickrlogos_path', self.flickrlogos_path)
         config.set('Paths', 'result_path', self.result_path)
         config.set('Flags', 'ignore_difficult', self.ignore_difficult)
