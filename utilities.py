@@ -81,3 +81,18 @@ def create_result_path(prefix, path, nr):
     """
     return prefix + path[:-4] + '_'  + '{:02d}'.format(nr) + '.png'
 
+class ImageInfo:
+    """ Class to save info from *.gt_data.txt files """
+    def __init__(self, path):
+        s = path.split()
+        self.x1 = int(s[0])
+        self.y1 = int(s[1])
+        self.x2 = int(s[2])
+        self.y2 = int(s[3])
+        self.classid = int(s[4])
+        self.maskstring = s[6]
+        self.difficult = bool(s[7])
+        self.truncated = bool(s[8])
+
+
+
