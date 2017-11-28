@@ -97,10 +97,13 @@ class ImageInfo:
         self.truncated = bool(int(s[8]))
 
 
-def scale(new_width, image):
-    """ scales image to new_width x new_width """
-    w = len(image[0])
-    h = len(image)
+def scale(new_width, image, total_width):
+    """
+    scales image to new_width x new_width and adds borders to bloat the
+    image to total_width x total_width
+    """
+    w = image.shape[1]
+    h = image.shape[0]
     if w > h:
         r = float(new_width) / w
         dim = (new_width, int(h * r))
@@ -108,6 +111,13 @@ def scale(new_width, image):
         r = float(new_width) / h
         dim = (int(w * r), new_width)
     resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
-    blank_image = np.zeros((new_width, new_width, 3), np.uint8)
-    #result = ...
-    return resized
+    w_diff = total_width - resized.shape[1]
+    h_diff = total_width - resized.shape[0]
+    border_left = int(w_diff / 2)
+    border_right = w_diff - border_left
+    border_top = int(h_diff / 2)
+    border_bottom = h_diff - border_top
+    BLACK = [0, 0, 0]
+    return cv2.copyMakeBorder(resized, border_top, border_bottom, border_left,
+            border_right, cv2.BORDER_CONSTANT, value=BLACK)
+
