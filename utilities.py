@@ -9,6 +9,7 @@ import ConfigParser
 import os
 import cv2
 import numpy as np
+import subprocess
 
 class CreateDatasetSettings:
     """ class to store settings for converting the flickrlogos-47
@@ -126,4 +127,19 @@ def scale(new_width, image, total_width):
     return cv2.copyMakeBorder(resized, border_top, border_bottom, border_left,
             border_right, cv2.BORDER_CONSTANT, value=BLACK)
 
+def create_lmdb(caffe_root, path, listfile, db_name):
+    """
+    function to create lmdb from the images in path which are listed in the
+    listfile
+    """
+    if caffe_root.endswith('/'):
+        program_path = caffe_root + 'build/tools/convert_imageset'
+    else:
+        program_path = caffe_root + '/build/tools/convert_imageset'
+    if path.endswith('/'):
+        root_folder = path
+    else:
+        root_folder = path + '/'
+    print subprocess.check_output([program_path, root_folder + ' ' + listfile
+        + ' ' + db_name])
 
