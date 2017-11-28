@@ -91,8 +91,8 @@ class ImageInfo:
         self.y2 = int(s[3])
         self.classid = int(s[4])
         self.maskstring = s[6]
-        self.difficult = bool(s[7])
-        self.truncated = bool(s[8])
+        self.difficult = bool(int(s[7]))
+        self.truncated = bool(int(s[8]))
 
 
 
