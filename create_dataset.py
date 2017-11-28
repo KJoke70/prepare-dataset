@@ -8,6 +8,7 @@ __version__ = "0.1"
 """
 
 import utilities
+import cv2
 
 # load config
 config_path = 'create_dataset.ini'
@@ -43,4 +44,76 @@ utilities.makedirs(settings.result_path + '64/test/000002/')
 utilities.makedirs(settings.result_path + '64/train/000000/')
 utilities.makedirs(settings.result_path + '64/train/000001/')
 utilities.makedirs(settings.result_path + '64/train/000002/')
+
+# variable for
+
+# create cropped images
+# test folder 
+for i in xrange(len(test_filelist)):
+    info_path = test_path + utilities.get_info_file_path(test_filelist[i])
+    with open(info_path, 'r') as f:
+        info = f.readlines()
+    info = [x.strip() for x in info]
+    img = cv2.imread(test_path + test_filelist[i]) #load image
+    for j in xrange(len(info)):
+        data = utilities.ImageInfo(info[j])
+        new_path_64 = utilities.create_result_path(settings.result_path +
+                '64/test/', test_filelist[i], j)
+        new_path_256 = utilities.create_result_path(settings.result_path +
+                '256/test/', test_filelist[i], j)
+        create = False
+        if settings.ignore_difficult:
+            if settings.ignore_truncated:
+                if not data.difficult and not data.truncated:
+                    create = True
+            else:
+                if not data.difficult:
+                    create = True
+        else:
+            if settings.ignore_truncated:
+                if not data.truncated:
+                    create = True
+            else:
+                create = True
+        if create:
+            cv2.imwrite(new_path_64, utilities.crop_image(img, data.x1, data.y1,
+                data.x2, data.y2))
+            cv2.imwrite(new_path_256, utilities.crop_image(img, data.x1, data.y1,
+                data.x2, data.y2))
+
+
+
+# train folder 
+for i in xrange(len(train_filelist)):
+    info_path = train_path + utilities.get_info_file_path(train_filelist[i])
+    with open(info_path, 'r') as f:
+        info = f.readlines()
+    info = [x.strip() for x in info]
+    img = cv2.imread(train_path + train_filelist[i]) #load image
+    for j in xrange(len(info)):
+        data = utilities.ImageInfo(info[j])
+        new_path_64 = utilities.create_result_path(settings.result_path +
+                '64/train/', train_filelist[i], j)
+        new_path_256 = utilities.create_result_path(settings.result_path +
+                '256/train/', train_filelist[i], j)
+        create = False
+        if settings.ignore_difficult:
+            if settings.ignore_truncated:
+                if not data.difficult and not data.truncated:
+                    create = True
+            else:
+                if not data.difficult:
+                    create = True
+        else:
+            if settings.ignore_truncated:
+                if not data.truncated:
+                    create = True
+            else:
+                create = True
+        if create:
+            cv2.imwrite(new_path_64, utilities.crop_image(img, data.x1, data.y1,
+                data.x2, data.y2))
+            cv2.imwrite(new_path_256, utilities.crop_image(img, data.x1, data.y1,
+                data.x2, data.y2))
+
 
