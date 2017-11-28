@@ -76,10 +76,11 @@ for i in xrange(len(test_filelist)):
             else:
                 create = True
         if create:
-            cv2.imwrite(new_path_64, utilities.crop_image(img, data.x1, data.y1,
-                data.x2, data.y2))
-            cv2.imwrite(new_path_256, utilities.crop_image(img, data.x1, data.y1,
-                data.x2, data.y2))
+            crop=utilities.crop_image(img, data.x1, data.y1, data.x2, data.y2)
+            resized64 = utilities.scale(64, crop, 256)
+            cv2.imwrite(new_path_64, resized64)
+            resized256 = utilities.scale(256, crop, 256)
+            cv2.imwrite(new_path_256, resized256)
 
 
 
@@ -111,9 +112,11 @@ for i in xrange(len(train_filelist)):
             else:
                 create = True
         if create:
-            cv2.imwrite(new_path_64, utilities.crop_image(img, data.x1, data.y1,
-                data.x2, data.y2))
-            cv2.imwrite(new_path_256, utilities.crop_image(img, data.x1, data.y1,
-                data.x2, data.y2))
+            crop=utilities.crop_image(img, data.x1, data.y1, data.x2, data.y2)
+            resized64 = utilities.scale(64, crop, 256)
+            cv2.imwrite(new_path_64, resized64)
+            resized256 = utilities.scale(256, crop, 256)
+            cv2.imwrite(new_path_256, resized256)
+
 
 
