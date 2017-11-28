@@ -81,7 +81,7 @@ def create_result_path(prefix, path, nr):
     returns path for new file. prefix is e.g. '64/test/', path is e.g.
     '000000/000000144.png', nr is number of cropped image
     """
-    return prefix + path[:-4] + '_'  + '{:02d}'.format(nr) + '.png'
+    return prefix + path[:-4] + '_'  + '{:04d}'.format(nr) + '.png'
 
 class ImageInfo:
     """ Class to save info from *.gt_data.txt files """
