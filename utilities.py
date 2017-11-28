@@ -145,6 +145,6 @@ def create_lmdb(caffe_root, path, listfile, db_name):
         root_folder = path
     else:
         root_folder = path + '/'
-    print subprocess.check_output([program_path, root_folder + ' ' + listfile
-        + ' ' + db_name])
+    subprocess.call(program_path + ' ' + root_folder + ' ' + listfile + ' ' +
+            db_name, shell = True)
 
