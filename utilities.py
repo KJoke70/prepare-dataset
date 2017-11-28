@@ -101,6 +101,7 @@ def scale(new_width, image, total_width):
     """
     scales image to new_width x new_width and adds borders to bloat the
     image to total_width x total_width
+    uses INTER_NEAREST for scaling
     """
     w = image.shape[1]
     h = image.shape[0]
@@ -110,7 +111,11 @@ def scale(new_width, image, total_width):
     else:
         r = float(new_width) / h
         dim = (int(w * r), new_width)
-    resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+    #if r > 1.0:
+    #    resized = cv2.resize(image, dim, interpolation = cv2.INTER_CUBIC)
+    #else:
+    #    resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+    resized = cv2.resize(image, dim, interpolation = cv2.INTER_NEAREST)
     w_diff = total_width - resized.shape[1]
     h_diff = total_width - resized.shape[0]
     border_left = int(w_diff / 2)
