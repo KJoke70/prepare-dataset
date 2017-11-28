@@ -47,8 +47,9 @@ utilities.makedirs(settings.result_path + '64/train/000002/')
 
 # variable for
 
-# create cropped images
+# create cropped and scaled images and write filelist
 # test folder 
+new_test_filelist = []
 for i in xrange(len(test_filelist)):
     info_path = test_path + utilities.get_info_file_path(test_filelist[i])
     with open(info_path, 'r') as f:
@@ -62,6 +63,7 @@ for i in xrange(len(test_filelist)):
         new_path_256 = utilities.create_result_path(settings.result_path +
                 '256/test/', test_filelist[i], j)
         create = False
+        filepath = utilities.create_result_path('', test_filelist[i], j)
         if settings.ignore_difficult:
             if settings.ignore_truncated:
                 if not data.difficult and not data.truncated:
@@ -81,10 +83,18 @@ for i in xrange(len(test_filelist)):
             cv2.imwrite(new_path_64, resized64)
             resized256 = utilities.scale(256, crop, 256)
             cv2.imwrite(new_path_256, resized256)
-
-
+            new_test_filelist.append(filepath + '\n')
+#    utilities.delete_if_exists(settings.result_path + '64/test/filelist.txt')
+#    utilities.delete_if_exists(settings.result_path + '256/test/filelist.txt')
+filelist64 = open(settings.result_path + '64/test/filelist.txt', 'w')
+filelist256 = open(settings.result_path + '256/test/filelist.txt', 'w')
+filelist64.writelines(new_test_filelist)
+filelist64.close()
+filelist256.writelines(new_test_filelist)
+filelist256.close()
 
 # train folder 
+new_train_filelist = []
 for i in xrange(len(train_filelist)):
     info_path = train_path + utilities.get_info_file_path(train_filelist[i])
     with open(info_path, 'r') as f:
@@ -98,6 +108,7 @@ for i in xrange(len(train_filelist)):
         new_path_256 = utilities.create_result_path(settings.result_path +
                 '256/train/', train_filelist[i], j)
         create = False
+        filepath = utilities.create_result_path('', train_filelist[i], j)
         if settings.ignore_difficult:
             if settings.ignore_truncated:
                 if not data.difficult and not data.truncated:
@@ -117,6 +128,14 @@ for i in xrange(len(train_filelist)):
             cv2.imwrite(new_path_64, resized64)
             resized256 = utilities.scale(256, crop, 256)
             cv2.imwrite(new_path_256, resized256)
+            new_train_filelist.append(filepath + '\n')
+filelist64 = open(settings.result_path + '64/train/filelist.txt', 'w')
+filelist256 = open(settings.result_path + '256/train/filelist.txt', 'w')
+filelist64.writelines(new_train_filelist)
+filelist64.close()
+filelist256.writelines(new_train_filelist)
+filelist256.close()
+
 
 
 

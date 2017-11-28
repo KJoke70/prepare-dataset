@@ -126,3 +126,4 @@ def scale(new_width, image, total_width):
     return cv2.copyMakeBorder(resized, border_top, border_bottom, border_left,
             border_right, cv2.BORDER_CONSTANT, value=BLACK)
 
+
