@@ -117,11 +117,11 @@ def scale(new_width, image, total_width):
     else:
         r = float(new_width) / h
         dim = (int(w * r), new_width)
-    #if r > 1.0:
-    #    resized = cv2.resize(image, dim, interpolation = cv2.INTER_CUBIC)
-    #else:
-    #    resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
-    resized = cv2.resize(image, dim, interpolation = cv2.INTER_NEAREST)
+    if r > 1.0:
+        resized = cv2.resize(image, dim, interpolation = cv2.INTER_CUBIC)
+    else:
+        resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+    #resized = cv2.resize(image, dim, interpolation = cv2.INTER_NEAREST)
     w_diff = total_width - resized.shape[1]
     h_diff = total_width - resized.shape[0]
     border_left = int(w_diff / 2)
