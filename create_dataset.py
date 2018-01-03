@@ -137,5 +137,14 @@ filelist256.writelines(new_train_filelist)
 filelist256.close()
 
 
+# make labels list
+labels_file = settings.flickrlogos_path + '/className2ClassID.txt'
+with  open(labels_file) as f:
+    labels = f.readlines()
 
+labels = [l[:l.find('\t')] for l in labels]
+labels_new_file = open(settings.result_path + 'flickrlogos_labels.txt', 'w')
+for item in labels:
+    print>> labels_new_file, item
+labels_new_file.close()
 
