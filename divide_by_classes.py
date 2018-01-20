@@ -28,6 +28,7 @@ os.chdir(result_path)
 with open(flist_name) as f:
     filelist = f.readlines()
 
+print 'items on filelist:', len(filelist)
 filelist = [x.strip() for x in filelist]
 
 files_0 = []
@@ -69,17 +70,23 @@ flist_0 = open('filelist_0.txt', 'w')
 flist_1 = open('filelist_1.txt', 'w')
 flist_2 = open('filelist_2.txt', 'w')
 
+i = 0
 for f, c in files_0:
     shutil.move(f, subset_0 + c + '/')
-
     flist_0.write('%s %s\n' % (subset_0 + c + f[f.rfind('/'):], c))
+    i += 1
+
 for f, c in files_1:
     shutil.move(f, subset_1 + c + '/')
     flist_1.write('%s %s\n' % (subset_1 + c + f[f.rfind('/'):], c))
+    i += 1
 
 for f, c in files_2:
     shutil.move(f, subset_2 + c + '/')
     flist_2.write('%s %s\n' % (subset_2 + c + f[f.rfind('/'):], c))
+    i += 1
+
+print 'processed files:', i
 
 flist_0.close()
 flist_1.close()
