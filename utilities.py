@@ -39,6 +39,10 @@ class CreateDatasetSettings:
                     self.result_path = self.result_path + '/'
                 self.ignore_difficult = config.get('Flags', 'ignore_difficult')
                 self.ignore_truncated = config.get('Flags', 'ignore_truncated')
+                self.use_size_threshold = config.get('Flags',
+                        'use_size_threshold')
+                self.size_threshold = config.get('Threshold',
+                        'size_threshold')
             except:
                 raise
         else:
@@ -49,6 +53,10 @@ class CreateDatasetSettings:
             # default flags
             self.ignore_difficult = True
             self.ignore_truncated = False
+            self.use_size_threshold = True
+            # thresholds
+            self.size_threshold = 20
+
             self.write_settings()
 
 
@@ -58,11 +66,14 @@ class CreateDatasetSettings:
         config = ConfigParser.ConfigParser()
         config.add_section('Paths')
         config.add_section('Flags')
+        config.add_section('Threshold')
         config.set('Paths', 'caffe_root', self.caffe_root)
         config.set('Paths', 'flickrlogos_path', self.flickrlogos_path)
         config.set('Paths', 'result_path', self.result_path)
         config.set('Flags', 'ignore_difficult', self.ignore_difficult)
         config.set('Flags', 'ignore_truncated', self.ignore_truncated)
+        config.set('Flags', 'use_size_threshold', self.use_size_threshold)
+        config.set('Threshold', 'size_threshold', self.size_threshold)
         config.write(file)
 
 def crop_image(img, x1, y1, x2, y2):
