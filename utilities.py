@@ -37,12 +37,14 @@ class CreateDatasetSettings:
                 self.result_path = config.get('Paths', 'result_path')
                 if not self.result_path.endswith('/'):
                     self.result_path = self.result_path + '/'
-                self.ignore_difficult = config.get('Flags', 'ignore_difficult')
-                self.ignore_truncated = config.get('Flags', 'ignore_truncated')
-                self.use_size_threshold = config.get('Flags',
+                self.ignore_difficult = config.getboolean('Flags',
+                    'ignore_difficult')
+                self.ignore_truncated = config.getboolean('Flags',
+                    'ignore_truncated')
+                self.use_size_threshold = config.getboolean('Flags',
                         'use_size_threshold')
-                self.size_threshold = config.get('Threshold',
-                        'size_threshold')
+                self.size_threshold = int(config.get('Threshold',
+                        'size_threshold'))
             except:
                 raise
         else:
