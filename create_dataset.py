@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 Creates train and test sets from the FlickrLogos-47 dataset
 
@@ -9,6 +9,8 @@ __version__ = "0.1"
 
 import utilities
 import cv2
+import shutil
+import os.path
 
 # load config
 config_path = 'create_dataset.ini'
@@ -25,11 +27,18 @@ test_filelist = [x.strip() for x in test_filelist]
 for i in xrange(len(test_filelist)):
     test_filelist[i] = test_filelist[i][2:]
 
+print 'test_filelist:', len(test_filelist), 'items.'
+
 with open(train_path + 'filelist.txt', 'r') as f:
     train_filelist = f.readlines()
 train_filelist = [x.strip() for x in train_filelist]
 for i in xrange(len(train_filelist)):
     train_filelist[i] = train_filelist[i][2:]
+
+print 'train_filelist:', len(train_filelist), 'items.'
+
+if os.path.exists(settings.result_path):
+    shutil.rmtree(settings.result_path)
 
 # create folder structure for result 256x256 and 64x64 variant
 utilities.makedirs(settings.result_path + '256/test/000000/')
@@ -93,6 +102,8 @@ filelist64.close()
 filelist256.writelines(new_test_filelist)
 filelist256.close()
 
+print 'new_test_filelist:', len(new_test_filelist), 'items.'
+
 # train folder 
 new_train_filelist = []
 for i in xrange(len(train_filelist)):
@@ -136,6 +147,7 @@ filelist64.close()
 filelist256.writelines(new_train_filelist)
 filelist256.close()
 
+print 'new_train_filelist:', len(new_train_filelist), 'itmes.'
 
 # make labels list
 labels_file = settings.flickrlogos_path + '/className2ClassID.txt'
