@@ -59,6 +59,10 @@ utilities.makedirs(settings.result_path + '64/train/000002/')
 # create cropped and scaled images and write filelist
 # test folder 
 new_test_filelist = []
+ignored_test = 0
+ignored_test_truncated = 0
+ignored_test_difficult = 0
+ignored_test_size_thresh = 0
 for i in xrange(len(test_filelist)):
     info_path = test_path + utilities.get_info_file_path(test_filelist[i])
     with open(info_path, 'r') as f:
@@ -71,30 +75,32 @@ for i in xrange(len(test_filelist)):
                 '64/test/', test_filelist[i], j)
         new_path_256 = utilities.create_result_path(settings.result_path +
                 '256/test/', test_filelist[i], j)
-        create = False
         filepath = utilities.create_result_path('', test_filelist[i], j)
-        if settings.ignore_difficult:
-            if settings.ignore_truncated:
-                if not data.difficult and not data.truncated:
-                    create = True
-            else:
-                if not data.difficult:
-                    create = True
-        else:
-            if settings.ignore_truncated:
-                if not data.truncated:
-                    create = True
-            else:
-                create = True
+
+        create = True
+        if settings.ignore_truncated and data.truncated:
+            create = False
+            ignored_test_truncated += 1
+
+        if settings.ignore_difficult and data.difficult:
+            create = False
+            ignored_test_difficult += 1
+
         if create:
-            crop=utilities.crop_image(img, data.x1, data.y1, data.x2, data.y2)
-            resized64 = utilities.scale(64, crop, 256)
-            cv2.imwrite(new_path_64, resized64)
-            resized256 = utilities.scale(256, crop, 256)
-            cv2.imwrite(new_path_256, resized256)
-            new_test_filelist.append(filepath + ' ' + str(data.classid) + '\n')
-#    utilities.delete_if_exists(settings.result_path + '64/test/filelist.txt')
-#    utilities.delete_if_exists(settings.result_path + '256/test/filelist.txt')
+            crop = utilities.crop_image(img, data.x1, data.y1, data.x2, data.y2)
+            crop_size = crop.shape[0] + crop.shape[1]
+            if settings.use_size_threshold and crop_size <= settings.size_threshold:
+                ignored_test_size_thresh += 1
+                ignored_test += 1
+                create = False
+            else:
+                resized64 = utilities.scale(64, crop, 256)
+                cv2.imwrite(new_path_64, resized64)
+                resized256 = utilities.scale(256, crop, 256)
+                cv2.imwrite(new_path_256, resized256)
+                new_test_filelist.append(filepath + ' ' + str(data.classid) + '\n')
+        else:
+            ignored_test += 1
 filelist64 = open(settings.result_path + '64/test/filelist.txt', 'w')
 filelist256 = open(settings.result_path + '256/test/filelist.txt', 'w')
 filelist64.writelines(new_test_filelist)
@@ -102,10 +108,19 @@ filelist64.close()
 filelist256.writelines(new_test_filelist)
 filelist256.close()
 
-print 'new_test_filelist:', len(new_test_filelist), 'items.'
+print ''
+print 'test: new filelist:', len(new_test_filelist), 'items.'
+print 'test: ignored due to truncated flag\t', ignored_test_truncated
+print 'test: ignored due to difficult flag\t', ignored_test_difficult
+print 'test: ignored due to size threshold\t', ignored_test_size_thresh
+print 'test: total ignored:\t\t\t', ignored_test
 
 # train folder 
 new_train_filelist = []
+ignored_train = 0
+ignored_train_truncated = 0
+ignored_train_difficult = 0
+ignored_train_size_thresh = 0
 for i in xrange(len(train_filelist)):
     info_path = train_path + utilities.get_info_file_path(train_filelist[i])
     with open(info_path, 'r') as f:
@@ -118,28 +133,32 @@ for i in xrange(len(train_filelist)):
                 '64/train/', train_filelist[i], j)
         new_path_256 = utilities.create_result_path(settings.result_path +
                 '256/train/', train_filelist[i], j)
-        create = False
         filepath = utilities.create_result_path('', train_filelist[i], j)
-        if settings.ignore_difficult:
-            if settings.ignore_truncated:
-                if not data.difficult and not data.truncated:
-                    create = True
-            else:
-                if not data.difficult:
-                    create = True
-        else:
-            if settings.ignore_truncated:
-                if not data.truncated:
-                    create = True
-            else:
-                create = True
+
+        create = True
+        if settings.ignore_truncated and data.truncated:
+            create = False
+            ignored_train_truncated += 1
+
+        if settings.ignore_difficult and data.difficult:
+            create = False
+            ignored_train_difficult += 1
+
         if create:
-            crop=utilities.crop_image(img, data.x1, data.y1, data.x2, data.y2)
-            resized64 = utilities.scale(64, crop, 256)
-            cv2.imwrite(new_path_64, resized64)
-            resized256 = utilities.scale(256, crop, 256)
-            cv2.imwrite(new_path_256, resized256)
-            new_train_filelist.append(filepath + ' ' + str(data.classid) + '\n')
+            crop = utilities.crop_image(img, data.x1, data.y1, data.x2, data.y2)
+            crop_size = crop.shape[0] + crop.shape[1]
+            if settings.use_size_threshold and crop_size <= settings.size_threshold:
+                ignored_train_size_thresh += 1
+                ignored_train += 1
+                create = False
+            else:
+                resized64 = utilities.scale(64, crop, 256)
+                cv2.imwrite(new_path_64, resized64)
+                resized256 = utilities.scale(256, crop, 256)
+                cv2.imwrite(new_path_256, resized256)
+                new_train_filelist.append(filepath + ' ' + str(data.classid) + '\n')
+        else:
+            ignored_train += 1
 filelist64 = open(settings.result_path + '64/train/filelist.txt', 'w')
 filelist256 = open(settings.result_path + '256/train/filelist.txt', 'w')
 filelist64.writelines(new_train_filelist)
@@ -147,7 +166,15 @@ filelist64.close()
 filelist256.writelines(new_train_filelist)
 filelist256.close()
 
-print 'new_train_filelist:', len(new_train_filelist), 'itmes.'
+
+print ''
+print 'train: new filelist:', len(new_train_filelist), 'items.'
+print 'train: ignored due to truncated flag\t', ignored_train_truncated
+print 'train: ignored due to difficult flag\t', ignored_train_difficult
+print 'train: ignored due to size threshold\t', ignored_train_size_thresh
+print 'train: total ignored:\t\t\t', ignored_train
+
+
 
 # make labels list
 labels_file = settings.flickrlogos_path + '/className2ClassID.txt'
