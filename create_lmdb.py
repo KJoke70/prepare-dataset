@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 """
-Script to create lmdb-db's from the created dataset
+Script to create lmdb-db's from the created dataset. This only calls the caffe programs to do so.
 
 __author__ = "Martin Lautenbacher"
 __version__ = "1.0"

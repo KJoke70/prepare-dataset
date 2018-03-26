@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 """
-Creates train and test sets from the FlickrLogos-47 dataset
+Creates train and test sets from the FlickrLogos-47 dataset (256x256 and 64x64 images)
 
 
 __author__ = "Martin Lautenbacher"
