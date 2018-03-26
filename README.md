@@ -9,14 +9,15 @@ The files provided are:
 # create_dataset.ini
 Settings file: is generated automatically if missing.
 caffe_root and flickrlogos_path have to be adjusted to suit your setup.
-| flag          | default       | explanation |
-| ------------- |:------------- | :-----------|
-| caffe_root    | ../../caffe/  | path to root folder of compiled caffe framework |
-| flickrlogos_path | ../../flickrlogos/ | path to root of flickrlogos-47 dataset |
-| result_path | result_set | output folder; will be created |
-| ignore_difficult | True | snippets marked as 'difficult' are ignored if True |
-| ignore_truncated | False | snippets marked as 'truncated' are ignored if True |
-| size_threshold | 20 | snippets with height + width <= 20 will be ignored |
+
+| flag             | default            | explanation                                        |
+| ---------------- | ------------------ | -------------------------------------------------- |
+| caffe_root       | ../../caffe/       | path to root folder of compiled caffe framework    |
+| flickrlogos_path | ../../flickrlogos/ | path to root of flickrlogos-47 dataset             |
+| result_path      | result_set         | output folder; will be created                     |
+| ignore_difficult | True               | snippets marked as 'difficult' are ignored if True |
+| ignore_truncated | False              | snippets marked as 'truncated' are ignored if True |
+| size_threshold   | 20                 | snippets with height + width <= 20 will be ignored |
 
 
 # create_dataset.py
