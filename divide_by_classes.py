@@ -1,4 +1,10 @@
 #! /usr/bin/env python2
+"""
+Script to divide the test set into it's different classes
+
+__author__ = "Martin Lautenbacher"
+__version__ = "1.0"
+"""
 
 import os
 import shutil

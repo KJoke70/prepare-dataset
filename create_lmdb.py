@@ -3,7 +3,7 @@
 Script to create lmdb-db's from the created dataset
 
 __author__ = "Martin Lautenbacher"
-__version__ = "0.1"
+__version__ = "1.0"
 """
 
 import utilities

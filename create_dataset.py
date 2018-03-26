@@ -4,7 +4,7 @@ Creates train and test sets from the FlickrLogos-47 dataset
 
 
 __author__ = "Martin Lautenbacher"
-__version__ = "0.1"
+__version__ = "1.0"
 """
 
 import utilities
