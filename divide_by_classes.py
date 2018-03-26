@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#!/usr/bin/env python2
 """
 Script to divide the test set into it's different classes
 
