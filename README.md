@@ -1,4 +1,8 @@
 # prepare-dataset
+This software was written to convert the [FlickrLogos-47 dataset](http://www.multimedia-computing.de/flickrlogos/) to make it usable in CNNs.
+
+
+
 The files provided are:
  * create_dataset.py
  * create_lmdb.py
